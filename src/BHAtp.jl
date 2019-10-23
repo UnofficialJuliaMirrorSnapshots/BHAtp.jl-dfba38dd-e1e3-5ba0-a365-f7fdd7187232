@@ -1,58 +1,51 @@
-__precompile__()
-
 module BHAtp
 
-# package code goes here
+using DataFrames
+using Interpolations
+using Distributed
+using CSV
 
-using Reexport, DataFrames, Statistics, Distributed
-using SparseArrays, LinearAlgebra 
+# Types and derived types
 
-@reexport using PtFEM
+include("Types.jl")
+include("Parameters.jl")
+include("Dataframes.jl")
 
-# General utilities
+# Exported methods
 
-include("util/types.jl")
+include("Bha.jl")
+include("TheoreticalPerformance.jl")
+include("ShowFunctions.jl")
 
-# input routines (called from BHAtp.jl)
+# Base level methods
 
-include("input/creatematerialdict.jl")
-include("input/createmediadict.jl")
-include("input/input.jl")
-#include("input/updatematerialtable.jl")
-#include("input/updatemediatable.jl")
-
-# problem input handling
-
-include("problem/problem.jl")
-include("problem/createmesh.jl")
-include("problem/createsegmentdf.jl")
-include("problem/createpropertydf.jl")
-include("problem/createnodedf.jl")
-include("problem/createelementdf.jl")
-include("problem/createcasetable.jl")
-
-# user visible (called from e.g. example projects)
-
-include("solve/solve.jl")
-
-# core ptfem based mp runs
-
-include("threads/runcase.jl")
-
-# These table are created here, a user might update and/or add to these dicts
-
-bha = Dict{Symbol, Any}()
-materials = creatematerialdict()
-media = createmediadict()
+include("InertiaForces.jl")
+include("CurvatureForces.jl")
+include("InitialRelease.jl")
+include("ExceedanceAdjustment.jl")
+include("FinalRelease.jl")
+include("Fem.jl")
+include("TpRunSetup.jl")
+include("Finalinit.jl")
+include("CreateMaterialTable.jl")
+include("CreateMediaTable.jl")
+include("CheckInput.jl")
+include("CreateMesh.jl")
+include("Interpolate.jl")
+include("Xyinit.jl")
+include("DalphaInit.jl")
+include("Stiffness.jl")
+include("GeometricMatrix.jl")
+include("Weightforces.jl")
+include("Endforces.jl")
 
 export
-  bha,
-  materials,
-  media,
-  #updatedmaterialstable,
-  #updatemedatable,
-  input!,
-  problem,
-  solve
+  BHAJ,
+  tp!,
+  show_solution,
+  show_tp,
+  create_final_tp_df,
+  create_element_df,
+  create_node_df
 
 end # module
