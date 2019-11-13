@@ -4,11 +4,11 @@ function create_final_tp_df(pdir, wobs, incls; ofu=true)
     for incl in incls
       filepath = joinpath(pdir, "tp", string(Int(wob)),
         string(Int(incl)), "tp.csv")
-      tp_df = CSV.read(filepath)
-      if length(df) == 0
-        df = tp_df[end, :]
+      tp_df = DataFrame(CSV.read(filepath))
+      if size(df, 1) == 0
+        df = DataFrame(tp_df[end, :])
       else
-        append!(df, tp_df[end, :])
+        append!(df, DataFrame(tp_df[end, :]))
       end
     end
   end
@@ -56,8 +56,8 @@ function show_solution(pdir, wobs, incls; tp=true, show=true)
         println("      $(assembly) (wob=$wobstring, incl=$inclstring)")
         println("=====================================================")
         println()
-        length(tp_df) > 0 && tp_df |> display
-        length(tp_df) > 0 && println()
+        size(tp_df, 1) > 0 && tp_df |> display
+        size(tp_df, 1) > 0 && println()
         df |> display
         println()
       end 
@@ -83,8 +83,8 @@ function show_solution(pdir, wob::Int, incl::Int; tp=true, show=true)
     println("      $(assembly) (wob=$wobstring, incl=$inclstring)")
     println("=====================================================")
     println()
-    length(tp_df) > 0 && tp_df |> display
-    length(tp_df) > 0 && println()
+    size(tp_df, 1) > 0 && tp_df |> display
+    size(tp_df, 1) > 0 && println()
     df |> display
     println()
   end 

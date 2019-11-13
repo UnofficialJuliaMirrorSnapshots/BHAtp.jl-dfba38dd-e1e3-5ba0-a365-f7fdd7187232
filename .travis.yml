@@ -5,7 +5,7 @@ dist: xenial
 
 os:
   - linux
-  #- osx
+  - osx
   
 julia:
   - 1.1

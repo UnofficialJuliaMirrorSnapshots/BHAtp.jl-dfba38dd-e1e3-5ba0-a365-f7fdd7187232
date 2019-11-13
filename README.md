@@ -8,4 +8,6 @@
 
 This is a 3D element-by-element program to compute the theoretical performance of a bottom hole assembly.
 
-The code previously part of this package has been moved to BHAPtFEM.jl
+This is the base version of BHAtp and is intended to be used by CasePkgGenerator.jl to construct a new `case` package.
+
+CasePkgGenerator will be updates to use PkgSkeleton.jl.
